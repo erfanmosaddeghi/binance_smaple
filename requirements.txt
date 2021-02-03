@@ -1,0 +1,6 @@
+python-binance
+TA-Lib
+numpy
+flask
+backtrader
+matplotlib==3.2.2

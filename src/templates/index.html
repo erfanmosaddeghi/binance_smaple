@@ -1,0 +1,80 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+
+<body>
+
+    <div id='chart'></div>
+
+    <form action="/buy" method="POST">
+        <div id="buy" style="border-style: solid; margin: 5px; width: 750px; padding: 5px; background-color: rgb(160, 159, 157); size: initial;">
+            <h3>Buy</h3>
+
+            {% with messages = get_flashed_messages() %} {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %} {% endwith %}
+
+
+            <input type="text" name="count" id="count" placeholder="ex: 0.01">
+
+            <select name="asset">
+                {% for asset in context['exchange_info'] %}
+                    <option>{{ asset['symbol'] }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="submit" value="Buy">
+        </div>
+    </form>
+
+    <div id="account_info">
+        <table style="padding: 5px;">
+            <tr>
+                <td style="padding: 5px;">
+                    Symbol
+                </td>
+                <td style="padding: 5px;">
+                    Free
+                </td>
+                <td style="padding: 5px;">
+                    Locked
+                </td>
+            </tr>
+            {% for balance in context['account_info']['balances'] %}
+            <tr>
+                <td style="padding: 5px;">
+                    {{ balance['asset'] }}
+                </td>
+                <td style="padding: 5px;">
+                    {{ balance['free'] }}
+                </td>
+                <td style="padding: 5px;">
+                    {{ balance['locked'] }}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+    <div id="settings" style="border-style: solid; margin: 5px; width: 750px; padding: 5px; background-color: blanchedalmond; size: initial;">
+        <h3>settings</h3>
+        <input type="checkbox" />RSI
+        <input type="text" name="rsi_length" id="rsi_length" placeholder="14"> OverBought
+        <input type="text" name="over_bought" id="over_bought" placeholder="70"> OverSold
+        <input type="text" name="over_sold" id="over_sold" placeholder="30">
+    </div>
+
+    <script src="{{url_for('static',filename='./chart.js')}}"></script>
+</body>
+
+</html>
