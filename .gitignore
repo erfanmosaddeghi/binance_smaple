@@ -133,3 +133,5 @@ node_modules/
 
 dataset.json
 package-lock.json
+
+data/*
